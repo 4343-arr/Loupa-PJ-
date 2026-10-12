@@ -1,0 +1,19 @@
+LOUPA PJ — APLICATIVO WEB INSTALÁVEL
+
+Arquivos:
+- index.html: programa Loupa PJ
+- manifest.webmanifest: nome, ícones e configuração de instalação
+- sw.js: cache para uso offline após o primeiro acesso
+- icons/: ícones do aplicativo
+
+IMPORTANTE:
+Para instalar como aplicativo no Android, publique todos os arquivos em um endereço HTTPS.
+Abrir o index.html diretamente como arquivo local não permite a instalação PWA completa.
+
+Depois de publicar:
+1. Abra o endereço HTTPS no Google Chrome do Android.
+2. Abra o menu ⋮.
+3. Escolha "Instalar app" ou "Adicionar à tela inicial".
+4. Confirme o nome Loupa PJ.
+
+Os cálculos do programa são executados no próprio dispositivo. O cache offline fica disponível após o primeiro carregamento bem-sucedido.

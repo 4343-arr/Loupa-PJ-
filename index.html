@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Loupa PJ</title>
+<style>
+:root{--navy:#10243a;--blue:#2463eb;--teal:#0f9f8f;--bg:#f4f7fb;--card:#fff;--text:#17283c;--muted:#68788c;--line:#e2e8f0;--gold:#f5b942}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{background:linear-gradient(120deg,#10243a,#1c4672);color:white;padding:25px max(20px,calc((100vw - 1180px)/2)) 28px}
+.brand{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:#b8d1f0;font-weight:800}.headrow{display:flex;align-items:end;justify-content:space-between;gap:20px;flex-wrap:wrap}h1{font-size:clamp(25px,4vw,36px);margin:8px 0 5px;letter-spacing:-.03em}.subtitle{color:#d0deed;margin:0}.pill{border:1px solid #54708f;color:#e3edf8;border-radius:999px;padding:7px 12px;font-size:12px}
+main{max-width:1180px;margin:24px auto;padding:0 18px 40px}.layout{display:grid;grid-template-columns:310px minmax(0,1fr);gap:18px;align-items:start}.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:20px;box-shadow:0 4px 18px #18314c08}.card h2{font-size:17px;margin:0 0 16px;letter-spacing:-.02em}.inputs{display:grid;gap:13px}.field label{display:block;font-size:12px;font-weight:750;color:var(--muted);margin-bottom:6px}.field input{width:100%;padding:11px 12px;border:1px solid #cbd5e1;border-radius:10px;font:inherit;color:var(--text);background:white;outline:none}.field input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #2463eb1c}.hint{font-size:11px;color:var(--muted);margin-top:4px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}.btn{border:0;border-radius:10px;padding:11px 12px;font-weight:750;cursor:pointer;font-size:13px}.primary{background:var(--blue);color:white}.secondary{background:#eaf0f8;color:#18304a}.btn:hover{filter:brightness(.97)}.content{display:grid;gap:18px}.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.kpi{padding:17px}.kpi .label{font-size:12px;color:var(--muted);font-weight:700}.kpi .value{font-size:clamp(19px,2.2vw,27px);font-weight:850;letter-spacing:-.04em;margin:8px 0 4px;overflow-wrap:anywhere}.kpi .note{font-size:11px;color:var(--muted)}.green{color:var(--teal)}.sectiontop{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.sectiontop h2{margin:0}.tabs{display:flex;gap:6px;background:#eef2f7;padding:4px;border-radius:10px}.tab{border:0;border-radius:7px;padding:7px 10px;background:transparent;color:var(--muted);font-weight:750;cursor:pointer}.tab.active{background:white;color:var(--text);box-shadow:0 1px 3px #0001}.chartwrap{height:280px;margin-top:12px;position:relative}canvas{width:100%;height:100%;display:block}.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:7px}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}.tablewrap{overflow:auto;max-height:440px;border:1px solid var(--line);border-radius:10px}table{width:100%;border-collapse:collapse;font-size:12px;white-space:nowrap}th{background:#f4f7fb;color:#506176;text-align:right;position:sticky;top:0;z-index:1}td{text-align:right}th,td{padding:10px 12px;border-bottom:1px solid var(--line)}th:first-child,td:first-child{text-align:left}.annualgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.smallnote{font-size:12px;color:var(--muted)}.scenario{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.scenario .box{background:#f7f9fc;border:1px solid var(--line);border-radius:12px;padding:13px}.scenario .rate{font-size:12px;color:var(--muted);font-weight:750}.scenario .amount{font-size:18px;font-weight:850;margin-top:5px;letter-spacing:-.03em}.footer{font-size:11px;color:var(--muted);text-align:center;margin:20px 0}.hidden{display:none!important}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}.kpi:last-child{grid-column:span 2}.annualgrid{grid-template-columns:1fr}.chartwrap{height:235px}}
+@media(max-width:450px){main{padding:0 10px 25px;margin-top:12px}.card{padding:15px;border-radius:14px}.kpis{gap:8px}.kpi{padding:13px}.scenario{grid-template-columns:1fr}.headrow{align-items:start}.actions{grid-template-columns:1fr 1fr}}
+@media print{body{background:white}header{padding:16px;color:white;-webkit-print-color-adjust:exact;print-color-adjust:exact}main{max-width:none;margin:10px;padding:0}.layout{grid-template-columns:260px 1fr}.card{box-shadow:none;break-inside:avoid}.actions,.tabs,.pill{display:none!important}.tablewrap{max-height:none;overflow:visible}table{font-size:9px}th{position:static}.chartwrap{height:200px}.footer{margin-top:8px}}
+</style>
+
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#10243a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Loupa PJ">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+
+</head>
+<body>
+<header><div class="headrow"><div><div class="brand">Planejamento patrimonial</div><h1>Loupa PJ</h1><p class="subtitle">Projete aportes, compare cenários e acompanhe seu patrimônio ao longo do tempo.</p></div><div class="pill">BRL · Valores brutos</div></div></header>
+<main>
+<div class="layout">
+<aside class="card">
+<h2>Parâmetros da simulação</h2>
+<div class="inputs">
+<div class="field"><label for="capital">Capital inicial (R$)</label><input id="capital" type="text" inputmode="decimal" autocomplete="off" value="0"></div>
+<div class="field"><label for="aporte">Aporte mensal inicial (R$)</label><input id="aporte" type="text" inputmode="decimal" autocomplete="off" value="0"><div class="hint">Separadores brasileiros automáticos: 1.234,56</div></div>
+<div class="field"><label for="taxa">Rentabilidade (%)</label>
+<div style="display:grid;grid-template-columns:minmax(0,1fr) 115px;gap:8px">
+<input id="taxa" type="text" min="0" max="100" step="0.1" value="0" aria-label="Rentabilidade" inputmode="decimal">
+<select id="unidadeTaxa" aria-label="Periodicidade da rentabilidade" style="padding:11px 8px;border:1px solid #cbd5e1;border-radius:10px;font:inherit;color:var(--text);background:white">
+<option value="anual" selected>Anual</option><option value="mensal">Mensal</option>
+</select></div><div class="hint" id="taxaHint">Informe a rentabilidade anual. O programa converte para a taxa mensal equivalente.</div></div>
+<div class="field"><label for="reajuste">Aumento anual do aporte (%)</label><input id="reajuste" type="text" min="0" max="100" step="0.5" value="0" inputmode="decimal"></div>
+<div class="field"><label for="prazoValor">Prazo do investimento</label>
+<div style="display:grid;grid-template-columns:minmax(0,1fr) 115px;gap:8px">
+<input id="prazoValor" type="number" min="0" max="99" step="1" value="0" inputmode="numeric" aria-label="Prazo do investimento">
+<select id="unidadePrazo" aria-label="Unidade do prazo" style="padding:11px 8px;border:1px solid #cbd5e1;border-radius:10px;font:inherit;color:var(--text);background:white"><option value="anos" selected>Ano</option><option value="meses">Mês</option></select></div><div class="hint" id="prazoHint">Informe o prazo em anos (0 a 99).</div></div>
+</div>
+<div class="actions"><button class="btn primary" id="recalcular">Recalcular</button><button class="btn secondary" id="restaurar">Restaurar</button></div><div style="margin-top:8px"><button class="btn secondary" id="limparDinheiro" style="width:100%">Limpar capital e aporte</button></div>
+<div class="actions"><button class="btn secondary" id="excel">Exportar Excel/CSV</button><button class="btn secondary" id="pdf">Salvar em PDF</button></div>
+<p class="smallnote">Os resultados atualizam automaticamente quando você altera os campos. Para PDF, escolha “Salvar como PDF” na janela de impressão.</p>
+</aside>
+<div class="content">
+<section class="kpis">
+<div class="card kpi"><div class="label">Patrimônio final estimado</div><div class="value green" id="final">—</div><div class="note" id="prazoLabel">Ao final do prazo</div></div>
+<div class="card kpi"><div class="label">Total investido</div><div class="value" id="investido">—</div><div class="note">Capital inicial + aportes</div></div>
+<div class="card kpi"><div class="label">Rendimentos brutos</div><div class="value" id="rendimentos">—</div><div class="note">Sem impostos, taxas ou inflação</div></div>
+</section>
+<section class="card">
+<div class="sectiontop"><h2>Evolução do patrimônio</h2><div class="tabs"><button class="tab active" data-view="year">Anual</button><button class="tab" data-view="month">Mensal</button></div></div>
+<div class="chartwrap"><canvas id="chart" aria-label="Gráfico de evolução do patrimônio"></canvas></div>
+<div class="legend"><span><i class="dot" style="background:#2463eb"></i>Patrimônio projetado</span><span><i class="dot" style="background:#0f9f8f"></i>Capital investido acumulado</span></div>
+</section>
+<section class="card"><div class="sectiontop"><h2>Comparação de rentabilidade</h2><span class="smallnote">Mesmos aportes e prazo</span></div><div id="scenarios" class="scenario" style="margin-top:14px"></div></section>
+<section class="card"><div class="sectiontop"><h2>Resumo anual</h2><span class="smallnote">Valores ao final de cada ano</span></div><div class="tablewrap" style="margin-top:13px"><table><thead><tr><th>Ano</th><th>Aporte mensal</th><th>Aportes no ano</th><th>Rendimentos no ano</th><th>Saldo final</th></tr></thead><tbody id="annual"></tbody></table></div></section>
+<section class="card"><div class="sectiontop"><h2>Projeção mensal detalhada</h2><span class="smallnote" id="monthlyCount"></span></div><div class="tablewrap" style="margin-top:13px"><table><thead><tr><th>Mês</th><th>Ano</th><th>Aporte</th><th>Saldo inicial</th><th>Rendimento</th><th>Saldo final</th><th>Total investido</th></tr></thead><tbody id="monthly"></tbody></table></div></section>
+</div></div>
+<div class="footer">Simulação matemática ilustrativa. Rentabilidade futura não é garantida. Aportes considerados no fim de cada mês.</div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const money=n=>new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:2}).format(Number.isFinite(n)?n:0);
+function parseLocalNumber(value){
+ let s=String(value??'').trim().replace(/R\$/gi,'').replace(/\s/g,'');
+ if(!s)return 0;
+ if(s.includes(',')){s=s.replace(/\./g,'').replace(',','.')}
+ else if((s.match(/\./g)||[]).length>1){s=s.replace(/\./g,'')}
+ else if(/\.\d{3}$/.test(s)){s=s.replace(/\./g,'')}
+ const n=Number(s);return Number.isFinite(n)?Math.max(0,n):0
+}
+function formatLocalNumber(value){return new Intl.NumberFormat('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}).format(parseLocalNumber(value))}
+
+function formatMoneyWhileTyping(input){
+ const old=input.value, caret=input.selectionStart??old.length;
+ const digitsBefore=(old.slice(0,caret).match(/\d/g)||[]).length;
+ let s=old.replace(/R\$/gi,'').replace(/\s/g,'');
+ if(!s){return}
+ let decimalSep=-1;
+ const comma=s.lastIndexOf(',');
+ const dot=s.lastIndexOf('.');
+ if(comma>=0) decimalSep=comma;
+ else if(dot>=0 && s.length-dot-1<=2) decimalSep=dot;
+ let intPart,decPart='';
+ if(decimalSep>=0){intPart=s.slice(0,decimalSep).replace(/\D/g,'');decPart=s.slice(decimalSep+1).replace(/\D/g,'').slice(0,2)}
+ else intPart=s.replace(/\D/g,'');
+ intPart=intPart.replace(/^0+(?=\d)/,'');
+ const grouped=intPart.replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+ const hasDecimal=decimalSep>=0;
+ const formatted=grouped+(hasDecimal?','+decPart:'');
+ input.value=formatted;
+ let pos=0,count=0;
+ while(pos<formatted.length && count<digitsBefore){if(/\d/.test(formatted[pos]))count++;pos++}
+ if(hasDecimal && caret>decimalSep && count===digitsBefore)pos=Math.min(formatted.length,grouped.length+1+decPart.length);
+ try{input.setSelectionRange(pos,pos)}catch(e){}
+}
+
+const pct=n=>new Intl.NumberFormat('pt-BR',{style:'percent',minimumFractionDigits:2,maximumFractionDigits:4}).format(n);
+let currentView='year', lastData=null;
+function getParams(){
+ const rateInput=Math.min(100,Math.max(0,Number(String($('taxa').value).replace(',','.'))||0))/100;
+ const unidadeTaxa=$('unidadeTaxa') ? $('unidadeTaxa').value : 'anual';
+ const taxa=unidadeTaxa==='mensal' ? Math.pow(1+rateInput,12)-1 : rateInput;
+ let prazoValor=Math.max(0,Math.floor(Number($('prazoValor').value)||0));
+ const unidadePrazo=$('unidadePrazo').value;
+ if(unidadePrazo==='anos'){prazoValor=Math.min(99,prazoValor);$('prazoValor').max=99;}
+ else {prazoValor=Math.min(1188,prazoValor);$('prazoValor').max=1188;}
+ $('prazoValor').min=0; $('prazoValor').value=prazoValor;
+ const anos=unidadePrazo==='anos'?prazoValor:Math.floor(prazoValor/12);
+ const meses=unidadePrazo==='anos'?0:prazoValor%12;
+ const totalMeses=unidadePrazo==='anos'?prazoValor*12:prazoValor;
+ $('prazoHint').textContent=unidadePrazo==='anos'?'Informe o prazo em anos (0 a 99).':'Informe o prazo em meses (0 a 1.188).';
+ if($('taxaHint')) $('taxaHint').textContent=unidadeTaxa==='mensal'?'Informe a rentabilidade mensal. O programa converte para a taxa anual equivalente.':'Informe a rentabilidade anual. O programa converte para a taxa mensal equivalente.';
+ return {capital:parseLocalNumber($('capital').value),aporte:parseLocalNumber($('aporte').value),taxa,reajuste:Math.min(100,Math.max(0,Number(String($('reajuste').value).replace(',','.'))||0))/100,unidadePrazo,prazoValor,anos,meses,totalMeses,unidadeTaxa,valorTaxa:rateInput};
+}
+function simulate(p,annualRate=p.taxa){const r=Math.pow(1+annualRate,1/12)-1,rows=[];let balance=p.capital,invested=p.capital,yearInterest=0,yearStart=balance,yearContrib=0,annual=[];for(let m=1;m<=p.totalMeses;m++){const y=Math.ceil(m/12),contrib=p.aporte*Math.pow(1+p.reajuste,y-1),opening=balance,interest=opening*r;balance=opening+interest+contrib;invested+=contrib;yearInterest+=interest;yearContrib+=contrib;rows.push({month:m,year:y,contrib,opening,interest,balance,invested});if(m%12===0||m===p.totalMeses){annual.push({year:y,monthlyContribution:p.aporte*Math.pow(1+p.reajuste,y-1),contributions:yearContrib,interest:yearInterest,balance,invested,periodMonths:(m%12===0?12:m%12)});yearInterest=0;yearContrib=0;yearStart=balance}}return {rows,annual,final:balance,invested,earnings:balance-invested,monthlyRate:r}}
+function render(){const p=getParams(),d=simulate(p);lastData={p,d};$('final').textContent=money(d.final);$('investido').textContent=money(d.invested);$('rendimentos').textContent=money(d.earnings);$('prazoLabel').textContent=`Após ${p.anos} ${p.anos===1?'ano':'anos'} e ${p.meses} ${p.meses===1?'mês':'meses'} · taxa mensal ${pct(d.monthlyRate)}`;$('annual').innerHTML=d.annual.map(a=>`<tr><td>${a.year}º ano${a.periodMonths!==12?' (parcial: '+a.periodMonths+' meses)':''}</td><td>${money(a.monthlyContribution)}</td><td>${money(a.contributions)}</td><td>${money(a.interest)}</td><td><b>${money(a.balance)}</b></td></tr>`).join('');$('monthly').innerHTML=d.rows.map(r=>`<tr><td>${r.month}</td><td>${r.year}</td><td>${money(r.contrib)}</td><td>${money(r.opening)}</td><td>${money(r.interest)}</td><td><b>${money(r.balance)}</b></td><td>${money(r.invested)}</td></tr>`).join('');$('monthlyCount').textContent=`${d.rows.length} meses`;renderScenarios(p);drawChart(d,currentView)}
+function renderScenarios(p){const rates=[Math.max(0,p.taxa-.02),p.taxa,Math.min(1,p.taxa+.02)];$('scenarios').innerHTML=rates.map((r,i)=>{const d=simulate(p,r);return `<div class="box"><div class="rate">${i===0?'Cenário conservador':i===1?'Cenário selecionado':'Cenário otimista'}</div><div style="font-weight:800;margin-top:5px">${(r*100).toLocaleString('pt-BR',{maximumFractionDigits:2})}% a.a.</div><div class="amount">${money(d.final)}</div><div class="smallnote">Rendimento: ${money(d.earnings)}</div></div>`}).join('')}
+function drawChart(d,view){const c=$('chart'),rect=c.getBoundingClientRect(),ratio=window.devicePixelRatio||1;c.width=Math.max(300,rect.width*ratio);c.height=Math.max(180,rect.height*ratio);const ctx=c.getContext('2d');ctx.scale(ratio,ratio);const w=rect.width,h=rect.height,pad={l:68,r:14,t:18,b:32},pw=w-pad.l-pad.r,ph=h-pad.t-pad.b;ctx.clearRect(0,0,w,h);const source=view==='year'?d.annual.map(a=>({label:a.periodMonths!==12?'Ano '+a.year+'*':'Ano '+a.year,balance:a.balance,invested:a.invested})):d.rows.filter((r,i)=>r.month%Math.max(1,Math.ceil(d.rows.length/12))===0||r.month===1||r.month===d.rows.length).map(r=>({label:'Mês '+r.month,balance:r.balance,invested:r.invested}));if(!source.length)return;const max=Math.max(...source.map(x=>x.balance),1)*1.08;const fmt=v=>v>=1e6?(v/1e6).toLocaleString('pt-BR',{maximumFractionDigits:1})+' mi':(v/1000).toLocaleString('pt-BR',{maximumFractionDigits:0})+' mil';ctx.font='11px system-ui';ctx.textAlign='right';ctx.textBaseline='middle';for(let i=0;i<=4;i++){let y=pad.t+ph-i*ph/4,val=max*i/4;ctx.strokeStyle='#e7edf4';ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();ctx.fillStyle='#718096';ctx.fillText(fmt(val),pad.l-9,y)}const series=(key,color)=>{ctx.strokeStyle=color;ctx.lineWidth=2.5;ctx.lineJoin='round';ctx.beginPath();source.forEach((o,i)=>{const x=pad.l+(source.length===1?0:i*pw/(source.length-1)),y=pad.t+ph-o[key]/max*ph;i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke()};series('balance','#2463eb');series('invested','#0f9f8f');ctx.fillStyle='#718096';ctx.textAlign='center';ctx.textBaseline='top';const ticks=Math.min(5,source.length);for(let i=0;i<ticks;i++){const idx=Math.round(i*(source.length-1)/Math.max(1,ticks-1)),x=pad.l+(source.length===1?0:idx*pw/(source.length-1));ctx.fillText(source[idx].label,x,h-pad.b+10)}}
+function csvEscape(v){let s=String(v??'');return '"'+s.replace(/"/g,'""')+'"'}
+function exportCSV(){if(!lastData)render();const {p,d}=lastData;const lines=[['Loupa PJ'],['Capital inicial',p.capital],['Aporte mensal inicial',p.aporte],['Rentabilidade anual',p.taxa],['Reajuste anual dos aportes',p.reajuste],['Prazo (anos)',p.anos],['Meses adicionais',p.meses],['Prazo total (meses)',p.totalMeses],['Taxa mensal equivalente',d.monthlyRate],[],['Mês','Ano','Aporte do mês','Saldo inicial','Rendimento do mês','Saldo final','Total investido acumulado'],...d.rows.map(r=>[r.month,r.year,r.contrib,r.opening,r.interest,r.balance,r.invested])];const csv='\ufeff'+lines.map(row=>row.map(csvEscape).join(';')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='simulacao_juros_compostos.csv';a.click();URL.revokeObjectURL(url)}
+$('recalcular').addEventListener('click',render);
+['taxa','reajuste','prazoValor','unidadePrazo'].forEach(id=>$(id).addEventListener('input',render));
+['capital','aporte'].forEach(id=>{
+ $(id).addEventListener('input',()=>{formatMoneyWhileTyping($(id));render()});
+ $(id).addEventListener('blur',()=>{if($(id).value.trim()!=='')$(id).value=formatLocalNumber($(id).value);render()});
+});
+$('limparDinheiro').addEventListener('click',()=>{$('capital').value='';$('aporte').value='';render();$('capital').focus()});
+
+$('unidadePrazo').addEventListener('change',()=>{
+ const meses=$('unidadePrazo').value==='meses';
+ $('prazoValor').min=0; $('prazoValor').max=meses?1188:99; $('prazoValor').value=0;
+ render();
+});
+$('unidadeTaxa').addEventListener('change',()=>render());
+$('restaurar').addEventListener('click',()=>{ $('capital').value='0';$('aporte').value='0';$('taxa').value=0;$('unidadeTaxa').value='anual';$('reajuste').value=0;$('unidadePrazo').value='anos';$('prazoValor').value=0;render()});$('excel').addEventListener('click',exportCSV);$('pdf').addEventListener('click',()=>window.print());document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));currentView=b.dataset.view;drawChart(lastData.d,currentView)}));window.addEventListener('resize',()=>lastData&&drawChart(lastData.d,currentView));render();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  ['taxa','reajuste'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.value = '0';
+    el.addEventListener('focus', () => {
+      if (el.value.trim() === '0' || el.value.trim() === '0,0' || el.value.trim() === '0,00') {
+        el.select();
+      }
+    });
+    el.addEventListener('input', () => {
+      // Accept decimal comma or dot and keep only one decimal separator.
+      let v = el.value.replace(/[^\d,.]/g, '');
+      const comma = v.lastIndexOf(',');
+      const dot = v.lastIndexOf('.');
+      const sepIndex = Math.max(comma, dot);
+      if (sepIndex >= 0) {
+        const intPart = v.slice(0, sepIndex).replace(/[,.]/g, '');
+        const decPart = v.slice(sepIndex + 1).replace(/[,.]/g, '');
+        v = intPart + ',' + decPart;
+      }
+      // If the user starts typing over zero, do not keep a leading zero before the number.
+      v = v.replace(/^0+(?=\d)/, '');
+      if (v.startsWith(',')) v = '0' + v;
+      el.value = v;
+      try { render(); } catch (_) {}
+    });
+    el.addEventListener('blur', () => {
+      const n = Number(String(el.value || '0').replace(',','.'));
+      if (Number.isFinite(n)) el.value = String(n).replace('.', ',');
+      if (el.value === '') el.value = '0';
+      try { render(); } catch (_) {}
+    });
+  });
+});
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+ const prazo=document.getElementById('prazoValor');
+ const unidade=document.getElementById('unidadePrazo');
+ if(!prazo || !unidade) return;
+ prazo.value='0';
+ function limites(){
+   const meses=unidade.value==='meses';
+   prazo.min='0'; prazo.max=meses?'1188':'99';
+   const hint=document.getElementById('prazoHint');
+   if(hint) hint.textContent=meses?'Informe o prazo em meses (0 a 1.188).':'Informe o prazo em anos (0 a 99).';
+ }
+ prazo.addEventListener('focus',()=>{if(prazo.value==='0') prazo.select();});
+ prazo.addEventListener('input',()=>{
+   let v=prazo.value.replace(/[^\d]/g,'').replace(/^0+(?=\d)/,'');
+   if(v!=='' && Number(v)>Number(prazo.max)) v=prazo.max;
+   prazo.value=v;
+   try{render();}catch(e){}
+ });
+ prazo.addEventListener('blur',()=>{if(prazo.value==='')prazo.value='0';try{render();}catch(e){}});
+ unidade.addEventListener('change',()=>{limites();prazo.value='0';try{render();}catch(e){}});
+ limites();
+});
+</script>
+
+
+<script>
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(err => console.warn('Não foi possível registrar o modo offline:', err));
+  });
+}
+</script>
+
+</body></html>
